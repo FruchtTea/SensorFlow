@@ -6,7 +6,7 @@
     --background-color: #161616;
     --background-footer: #0f0f0f;
 
-    --logo-color-primary: #1d477e;
+    --logo-color-primary: #15335a;
     --logo-color-secondary: #292927;
     --font-color-default: #ffffff;
 }
@@ -65,6 +65,42 @@ body {
     background-color: #79c3ff34;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #eeecec;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    border-radius: 2px;
+    border-left-style: solid;
+    border-color: #15335a;
+    border-left-width: 5px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-list-items {
+    display: flex;
+    color: var(--logo-color-primary);
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.dropdown-list-items:hover {
+    color: #000000;
+    background-color: rgba(167, 168, 255, 0.267);
+    border-radius: 5px;
+}
+
 /* ========================= MAIN BEREICH ========================= */
 
 .header {
@@ -72,6 +108,18 @@ body {
     color: var(--font-color-default);
     font-size: 100px;
     font-weight: 100;
+}
+
+.correct-icon-space {
+    margin: 5px;
+}
+
+hr {
+    margin: 5px;
+    border-color: var(--logo-color-primary);
+    border-width: 1px;
+    border-radius: 4px;
+    border-style: solid;
 }
 
 /* ========================= FOOTER BEREICH ========================= */
@@ -83,7 +131,7 @@ body {
     font-size: 15px;
     color: var(--font-color-default);
     background-color: var(--background-footer);
-    box-shadow: 0 -8px 8px 0 rgba(0, 0, 0, 0.514), 0 20px 20px 0 rgba(0, 0, 0, 514);
+    box-shadow: 0 -6px 8px 0 rgba(0, 0, 0, 0.514), 0 20px 20px 0 rgba(0, 0, 0, 514);
     width: 100%;
     bottom: 0px;
 }
