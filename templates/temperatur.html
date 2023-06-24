@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/visual/icon.ico">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Temperatur</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div>
+            <img src="/static/visual/banner.png" alt="banner" draggable="false" class="navbar-banner">
+        </div>
+        <div class="navbar-link-wrapper">
+            <div class="navbar-link-container">
+                <i class="fa-solid fa-house"></i>
+                <a class="navbar-link" href="http://127.0.0.1:5000">Home</a>
+            </div>
+
+            <div class="dropdown navbar-link-container">
+                <i class="fa-solid fa-compass"></i>
+                <a class="navbar-link" href="#">Features</a>
+                <div class="dropdown-content">
+                    <h1 class="dropdown-header">Alle Features</h1>
+                    <hr>
+                    <div>
+                        <a href="http://127.0.0.1:5000/geo" class="dropdown-list-items">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span class="correct-icon-space"></span> Geolocator</a>
+                    </div>
+                    <div>
+                        <a href="http://127.0.0.1:5000/temperatur" class="dropdown-list-items">
+                            <i class="fa-solid fa-temperature-low"></i>
+                            <span class="correct-icon-space"></span> Temperatur</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-link-container">
+                <i class="fa-solid fa-user-group"></i>
+                <a class="navbar-link" href="#">Über uns</a>
+            </div>
+            <div class="navbar-link-container">
+                <i class="fa-solid fa-file-code"></i>
+                <a class="navbar-link" href="https://github.com/FruchtTea/SensorFlow" target="_blank">Code</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <center>
+            <h1 class="header">Temperatur Manager</h1>
+            <p style="color: aliceblue;">Deine Temperatur beträgt: {{ show_temperature }} °C</p>
+        </center>
+    </main>
+
+
+    <div class="footer">
+        <p>IoT - Sensorik am Körper 2023</p>
+    </div>
+
+</body>
+
+</html>
