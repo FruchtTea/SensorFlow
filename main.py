@@ -4,12 +4,12 @@ import time
 import threading
 import paho.mqtt.client as mqtt
 
+app = Flask(__name__)
+
 lat = 48.13720
 long = 11.51000 
-temp = 420
+temp = 172.5
 humid = 0
-
-app = Flask(__name__)
 
 @app.route("/")
 def render_main_page():
@@ -35,6 +35,8 @@ def render_karte():
 
 @app.route("/temperatur")
 def render_temperatur_page():
+    global temp
+    temp = temp + 1
     return render_template("temperatur.html", show_temperature=temp)
 
 def startserver():
