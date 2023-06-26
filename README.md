@@ -6,10 +6,6 @@
 
 SensorFlow ist ein Schulprojekt im Bereich des Internet of Things und soll über Sensoren empfangene Dateien visualisieren.
 
-Der Grundlegende Aufbau ist in folgendem Diagramm dargestellt:
-
-![Grundlegender Aufbau](static/visual/banner.png)
-
 ## Getting Started
 
 Um loslegen zu können, muss zuerst [python3](https://www.python.org/) installiert sein. Zusätzlich werden im Projekt die folgenden pip-Abhändigkeiten genutzt:
