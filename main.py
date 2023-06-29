@@ -26,7 +26,7 @@ def render_karte():
 
     folium.Marker(
         location=[lat, long],
-        popup="<b>Dein Standord!</b>",
+        popup="<b>Du befindest dich hier!</b>",
         tooltip="Klicke, um mehr zu erfahren!",
         icon=folium.Icon(color="red"),
     ).add_to(map)
@@ -39,6 +39,11 @@ def render_temperatur_page():
     global temp
     temp = temp + 1
     return render_template("raumklima.html", show_temperature=temp)
+
+
+@app.route("/ueber-uns")
+def render_about_us_page():
+    return render_template("ueber-uns.html")
 
 
 def startserver():
@@ -71,6 +76,21 @@ print("MQTT connected")
 def verarbeite_telemetry(client, nutzerdaten, nachricht):
     payload = nachricht.payload.decode()
     print("Nachricht empfangen: ", payload)
+
+    # Extrahiere die Daten aus der empfangenen Nachricht
+    data = payload.split(",")
+    lat_value = float(data[0])
+    long_value = float(data[1])
+    temp_value = float(data[2])
+    humid_value = float(data[3])
+
+    # Aktualisiere die globalen Variablen
+    global lat, long, temp, humid
+    lat = lat_value
+    long = long_value
+    temp = temp_value
+    humid = humid_value
+
 
 
 # Abonniert die oben gegebene Topic
