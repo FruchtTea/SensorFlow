@@ -8,7 +8,7 @@ SensorFlow ist ein Schulprojekt im Bereich des Internet of Things und soll über
 
 Der Grundlegende Aufbau ist in folgendem Diagramm dargestellt:
 
-![Grundlegender Aufbau](static/visual/readme-struktur.png)
+![Grundlegender Aufbau](static/visual/readme-diagramm.png)
 
 ## Getting Started
 
