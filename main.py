@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import folium, time, threading
+import folium, time, threading, json, subprocess
 import paho.mqtt.client as mqtt
 
 ################## HIER STARTET MQTT LOGIK ##################
@@ -16,7 +16,7 @@ client_telemetry_topic = id + gruppenname + "/telemetry"
 mqtt_client = mqtt.Client(client_name)
 mqtt_client.connect("test.mosquitto.org")
 mqtt_client.loop_start()
-print("MQTT connected")
+print("MQTT connected - MAIN.py")
 
 
 # Methode wird aufgerufen, sobald eine neue Nachricht empfangen wurde
@@ -68,9 +68,14 @@ def render_karte():
 
 @app.route("/raumklima")
 def render_temperatur_page():
-    global temperaur_value
 
-    return render_template("raumklima.html", show_temperature=temperatur_value, show_humidity=1)
+    with open("data.json", "r") as json_file:
+        json_data = json.load(json_file)
+
+        temperatur = json_data["temperatur"]
+        print(temperatur)
+
+    return render_template("raumklima.html", show_temperature=1, show_humidity=1)
 
 
 @app.route("/ueber-uns")
@@ -82,13 +87,33 @@ def startserver():
     app.run()
 
 
+
+def start_temperatur_file(file_name):
+    subprocess.call(["python", "temperatur.py"])
+
+python_files = ["temperatur.py"]
+
+threads = []
+for file_name in python_files:
+    thread = threading.Thread(target=start_temperatur_file, args=(file_name,))
+    threads.append(thread)
+
+# Threads starten
+for thread in threads:
+    thread.start()
+
+# Auf Beendigung aller Threads warten
+for thread in threads:
+    thread.join()
+
+
+
 if __name__ == "__main__":
     t1 = threading.Thread(target=startserver)
     t1.start()
 
-# while True:
-#     try:
-#         # Warte eine halbe Sekunde für die nächste Messung
-#         time.sleep(0.1)
-#     except IOError:
-#         print("Error")
+while True:
+    try:
+        time.sleep(0.1)
+    except IOError:
+        print("Error")
