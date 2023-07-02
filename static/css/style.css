@@ -122,6 +122,10 @@ hr {
     border-style: solid;
 }
 
+.main-text-content {
+    color: var(--font-color-default);
+}
+
 /* ========================= FOOTER BEREICH ========================= */
 
 .footer {

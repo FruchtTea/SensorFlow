@@ -22,10 +22,25 @@ print("MQTT connected - MAIN.py")
 # Methode wird aufgerufen, sobald eine neue Nachricht empfangen wurde
 def verarbeite_telemetry(client, nutzerdaten, nachricht):
     payload = nachricht.payload.decode()
-    print("Nachricht empfangen: ", payload)
+    print(payload)
 
-    global temperatur_value
-    temperatur_value = payload
+    data = payload.split("=")
+
+    if data[0] == "lat":
+        global lat
+        lat = float(data[1])
+
+    if data[0] == "long":
+        global long
+        long = float(data[1])
+
+    if data[0] == "humid":
+        global humid
+        humid = float(data[1])
+
+    if data[0] == "temp":
+        global temp
+        temp = float(data[1])
 
 
 # Abonniert die oben gegebene Topic
@@ -52,7 +67,7 @@ def render_geolocator_page():
 @app.route("/render-geolocation-page")
 def render_karte():
     global lat
-    global long 
+    global long
 
     map = folium.Map(location=[lat, long], zoom_start=12, tiles="Stamen Terrain")
 
@@ -68,14 +83,10 @@ def render_karte():
 
 @app.route("/raumklima")
 def render_temperatur_page():
+    global temp
+    global humid
 
-    with open("data.json", "r") as json_file:
-        json_data = json.load(json_file)
-
-        temperatur = json_data["temperatur"]
-        print(temperatur)
-
-    return render_template("raumklima.html", show_temperature=1, show_humidity=1)
+    return render_template("raumklima.html", show_temperature=temp, show_humidity=humid)
 
 
 @app.route("/ueber-uns")
@@ -85,27 +96,6 @@ def render_about_us_page():
 
 def startserver():
     app.run()
-
-
-
-def start_temperatur_file(file_name):
-    subprocess.call(["python", "temperatur.py"])
-
-python_files = ["temperatur.py"]
-
-threads = []
-for file_name in python_files:
-    thread = threading.Thread(target=start_temperatur_file, args=(file_name,))
-    threads.append(thread)
-
-# Threads starten
-for thread in threads:
-    thread.start()
-
-# Auf Beendigung aller Threads warten
-for thread in threads:
-    thread.join()
-
 
 
 if __name__ == "__main__":
