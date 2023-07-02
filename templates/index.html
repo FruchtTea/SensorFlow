@@ -6,22 +6,32 @@ Startseite
 
 {% block content %}
 
-<center>
-    <h1 class="header">Willkommen!</h1>
-</center>
+<div class="glass-container">
+    <div class="mainpage-top-container">
+        <div>
+            <h2 class="subheader">SensorFlow</h2>
+        </div>
+        <div>
+            <p class="main-text-content">
+                <span style="font-weight: 700;">SensorFlow</span>
+                ist ein Schulprojekt im Bereich des Internet of Things und ist auf die <span
+                    style="font-weight: 700;">Sensorik am Körper </span>spezialisiert.
+                <br>
+                Das Projekt visualisiert über Sensoren empfangene Daten auf eine Benutzerfreundliche Art und
+                Weise.
 
-<div>
-    <div>
-        <p class="subheader">SensorFlow</p>
+                <br><br>
+
+                NEU: Sieh dir hier direkt alle <span style="font-weight: 700;">neuen Features</span> an!
+                <a href="#" class="icon-link">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </p>
+        </div>
     </div>
     <div>
-        <p class="main-text-content">
-            A modern <span>CSS UI library</span> based on the <span>glassmorphism design principles</span> that
-            will<br>help
-            you quickly design and build beautiful websites and applications.<br><br>
-
-            New: the glassmorphism generator is live. Check it out!
-        </p>
+        <img src="/static/visual/home-image.png" alt="image" id="main-image">
     </div>
 </div>
+
 {% endblock %}

@@ -2,6 +2,11 @@ from flask import Flask, render_template
 import folium, time, threading, json, subprocess
 import paho.mqtt.client as mqtt
 
+long = 0
+lat = 0
+temp = 0
+humid = 0
+
 ################## HIER STARTET MQTT LOGIK ##################
 gruppenname = "sensorik"
 id = "IoTinformatikschulbuch"
@@ -13,10 +18,19 @@ client_name = id + gruppenname + "server"
 client_telemetry_topic = id + gruppenname + "/telemetry"
 
 # Erzeugen des MQTT-Client Objekts und verbinden mit dem MQTT-Broker
-mqtt_client = mqtt.Client(client_name)
-mqtt_client.connect("test.mosquitto.org")
-mqtt_client.loop_start()
-print("MQTT connected - MAIN.py")
+def subscribe_to_mqtt():
+    global mqtt_client
+
+    mqtt_client = mqtt.Client(client_name)
+    mqtt_client.connect("test.mosquitto.org")
+    mqtt_client.loop_start()
+    print("MQTT connected")
+
+    # Abonniert die oben gegebene Topic
+    mqtt_client.subscribe(client_telemetry_topic)
+
+    # Legt fest, dass die Methode verarbeite_telemetry aufgerufen werden soll, wenn eine Nachricht eintrifft
+    mqtt_client.on_message = verarbeite_telemetry
 
 
 # Methode wird aufgerufen, sobald eine neue Nachricht empfangen wurde
@@ -43,16 +57,10 @@ def verarbeite_telemetry(client, nutzerdaten, nachricht):
         temp = float(data[1])
 
 
-# Abonniert die oben gegebene Topic
-mqtt_client.subscribe(client_telemetry_topic)
-
-# Legt fest, dass die Methode verarbeite_telemetry aufgerufen werden soll, wenn eine Nachricht eintrifft
-mqtt_client.on_message = verarbeite_telemetry
-
-
 ################## HIER STARTET DER FLASK SERVER ##################
 
 app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 @app.route("/")
 def render_main_page():
@@ -94,13 +102,11 @@ def render_about_us_page():
     return render_template("ueber-uns.html")
 
 
-def startserver():
-    app.run()
-
-
 if __name__ == "__main__":
-    t1 = threading.Thread(target=startserver)
+    t1 = threading.Thread(target=subscribe_to_mqtt)
     t1.start()
+
+    app.run(debug=True)
 
 while True:
     try:
