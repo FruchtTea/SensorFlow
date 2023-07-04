@@ -1,23 +1,14 @@
 from flask import Flask, render_template
-import folium, time, threading, json, subprocess
 import paho.mqtt.client as mqtt
+import folium, time, threading, json
 
-long = 0
-lat = 0
-temp = 0
-humid = 0
-
-################## HIER STARTET MQTT LOGIK ##################
 gruppenname = "sensorik"
 id = "IoTinformatikschulbuch"
 
-# Eindeutiger Name mit dem sich beim MQTT Broker angemeldet wird
 client_name = id + gruppenname + "server"
-
-# Kanal auf der das Gerät Informationen empfangen wird
 client_telemetry_topic = id + gruppenname + "/telemetry"
 
-# Erzeugen des MQTT-Client Objekts und verbinden mit dem MQTT-Broker
+# MQTT Verbindung aufbauen
 def subscribe_to_mqtt():
     global mqtt_client
 
@@ -26,38 +17,34 @@ def subscribe_to_mqtt():
     mqtt_client.loop_start()
     print("MQTT connected")
 
-    # Abonniert die oben gegebene Topic
     mqtt_client.subscribe(client_telemetry_topic)
-
-    # Legt fest, dass die Methode verarbeite_telemetry aufgerufen werden soll, wenn eine Nachricht eintrifft
     mqtt_client.on_message = verarbeite_telemetry
 
 
-# Methode wird aufgerufen, sobald eine neue Nachricht empfangen wurde
+# Wird aufgerufen sobald eine neue Nachricht empfangen wurde
 def verarbeite_telemetry(client, nutzerdaten, nachricht):
     payload = nachricht.payload.decode()
     print(payload)
 
-    data = payload.split("=")
+    payload_message = payload.split("=")
 
-    if data[0] == "lat":
-        global lat
-        lat = float(data[1])
+    # Dictionary für die möglichen MQTT Inputs
+    mapping = {
+        "lat": "Breitengrad",
+        "long": "Laegengrad",
+        "temp": "Temperatur",
+        "humid": "Luftfeuchtigkeit"
+}
 
-    if data[0] == "long":
-        global long
-        long = float(data[1])
+    # Überprüfen, ob der Schlüssel in der Zuordnung vorhanden ist
+    if payload_message[0] in mapping:
+        key = mapping[payload_message[0]]
+        value = float(payload_message[1])
+        data = {key: value}
+        json_data = json.dumps(data)
+        with open("data.json", "w") as json_file:
+            json_file.write(json_data)
 
-    if data[0] == "humid":
-        global humid
-        humid = float(data[1])
-
-    if data[0] == "temp":
-        global temp
-        temp = float(data[1])
-
-
-################## HIER STARTET DER FLASK SERVER ##################
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -74,10 +61,19 @@ def render_geolocator_page():
 
 @app.route("/render-geolocation-page")
 def render_karte():
-    global lat
-    global long
+    
+    # JSON-Datei öffnen und Daten laden
+    with open("data.json", "r") as json_file:
+        json_data = json.load(json_file)
 
-    map = folium.Map(location=[lat, long], zoom_start=12, tiles="Stamen Terrain")
+    # Den Wert aus der JSON-Datei auslesen
+    lat = json_data["Laengengrad"]
+    long = json_data["Breitengrad"]
+
+    map = folium.Map(
+        location=[lat, long], 
+        zoom_start=12, 
+        tiles="Stamen Terrain")
 
     folium.Marker(
         location=[lat, long],
@@ -90,9 +86,15 @@ def render_karte():
 
 
 @app.route("/raumklima")
-def render_temperatur_page():
-    global temp
-    global humid
+def render_klima_page():
+
+    # JSON-Datei öffnen und Daten laden
+    with open("data.json", "r") as json_file:
+        json_data = json.load(json_file)
+
+    # Den Wert aus der JSON-Datei auslesen
+    temp = json_data["Temperatur"]
+    humid = json_data["Luftfeuchtigkeit"]
 
     return render_template("raumklima.html", show_temperature=temp, show_humidity=humid)
 
