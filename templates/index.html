@@ -6,32 +6,45 @@ Startseite
 
 {% block content %}
 
-<div class="glass-container">
-    <div class="mainpage-top-container">
-        <div>
-            <h2 class="subheader">SensorFlow</h2>
-        </div>
-        <div>
-            <p class="main-text-content">
-                <span style="font-weight: 700;">SensorFlow</span>
-                ist ein Schulprojekt im Bereich des Internet of Things und ist auf die <span
-                    style="font-weight: 700;">Sensorik am Körper </span>spezialisiert.
-                <br>
-                Das Projekt visualisiert über Sensoren empfangene Daten auf eine Benutzerfreundliche Art und
-                Weise.
+<main>
+    <div class="glass-container">
+        <div class="mainpage-wrapper">
+            <h1 class="header">Startseite</h1>
 
-                <br><br>
+            <div class="main-bottom-container">
+                <div>
+                    <h2 class="subheader" id="colorful-header">SensorFlow</h2>
+                    <p class="main-text-content geolocator-glass-container">
+                        SensorFlow ist ein Schulprojekt im Bereich des Internet of Things und ist auf die Sensorik
+                        am Körper spezialisiert.<br>Das Projekt visualisiert über Sensoren empfangene Daten auf eine
+                        Benutzerfreundliche Art und Weise.
 
-                NEU: Sieh dir hier direkt alle <span style="font-weight: 700;">neuen Features</span> an!
-                <a href="#" class="icon-link">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-            </p>
+                        <br>
+                        <br>
+
+                        <i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                        Sieh dir hier direkt alle unserer Features an!
+                        <a href="geolocator" class="icon-link"><i
+                                class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        <br>
+                        <i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                        Den kompletten Quellcode findest du hier!
+                        <a href="https://github.com/FruchtTea/SensorFlow" target="_blank" class="icon-link"><i
+                                class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        <br>
+                        <i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                        Hier erfährst du mehr über das Team hinter dem Projekt!
+                        <a href="ueber-uns" class="icon-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+
+                    </p>
+                </div>
+                <div>
+                    <img src="/static/visual/home-image.png" alt="image" id="main-image" draggable="false">
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <img src="/static/visual/home-image.png" alt="image" id="main-image">
-    </div>
+</main>
 </div>
 
 {% endblock %}

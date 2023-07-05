@@ -7,9 +7,32 @@
 </head>
 
 {% block content %}
-<center>
-    <h1 class="header">Raumklima</h1>
-    <p style="color: aliceblue;">Deine Temperatur beträgt: {{ show_temperature }} °C</p>
-    <p style="color: aliceblue;">Die Luftfeuchtigkeit beträgt: {{ show_humidity }} %</p>
-</center>
+<main>
+    <div class="glass-container">
+        <div class="mainpage-wrapper">
+            <h1 class="header">Raumklima</h1>
+            <div class="main-bottom-container">
+                <p class="main-text-content">
+                    Du möchtest unbedingt mehr über die Klimaverhältnisse in deinem Raum wissen? Dann hast du soeben
+                    das das beste Tool dafür gefunden! <br>
+                    Dürfen wir vorstellen? Der neue Klima-Manager bietet dir alles, was dein Herz begehrt:
+                    <br>
+                    <br>
+                </p>
+            </div>
+
+            <div class="klima-container main-text-content">
+
+                <div class="colored-glass-container color-temp">
+                    <h2><i class="fa-solid fa-cloud-sun"></i> Temperatur: {{ show_temperature }}°C</h2>
+                </div>
+
+                <div class="colored-glass-container color-humid">
+                    <h2><i class="fa-solid fa-cloud-showers-water"></i> Luftfeuchtigkeit: {{ show_humidity}}%</h2>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

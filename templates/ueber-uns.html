@@ -5,7 +5,63 @@
 {% endblock %}
 
 {% block content %}
-<center>
-    <h1 class="header">Über uns</h1>
-</center>
+<main>
+    <div class="glass-container">
+        <div class="mainpage-wrapper">
+            <h1 class="header">Über uns</h1>
+
+            <div class="main-bottom-container">
+                <p class="main-text-content">
+                    Du möchtest mehr über die faszinierenden Menschen wissen, welche sich der Entwicklung dieses
+                    Projektes verschrieben haben?<br>
+                    Glückwunsch! Hier werden alle Teilnehmer im entsprechenden Aufgabenbereich aufgelistet!
+                    <br>
+                    <br>
+            </div>
+
+            <div class="main-text-content ">
+                <div class="geolocator-glass-container main-bottom-container">
+                    <div>
+                        <h2 id="colorful-header"><i class="fa-solid fa-desktop"></i> Front-End Development:</h2>
+                        <br>
+                        <br>
+                        <p><i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                            Aufgaben: <span style="color: silver">Flask Web-Server verwalten, Visualisierung der
+                                eingehenden Daten per HTML/CSS
+                            </span>
+                        </p>
+                        <p><i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                            Beteiligte: <span style="color: silver"> Alexander, Maximilian, Florian
+                            </span>
+                        </p>
+                    </div>
+                    <div>
+                        <img src="static/visual/frontend.png" alt="img" class="front-backend-image">
+                    </div>
+                </div>
+                <br>
+                <div class="geolocator-glass-container main-bottom-container">
+                    <div>
+                        <h2 id="colorful-header"><i class="fa-solid fa-server"></i> Back-End Development:</h2>
+                        <br>
+                        <br>
+                        <p><i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                            Aufgaben: <span style="color: silver">Anschließen der verschiedenen Sensoren, Versenden
+                                von Daten per MQTT
+                            </span>
+                        </p>
+                        <p><i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                            Beteiligte: <span style="color: silver"> Andreas, Theo, Vincent
+                            </span>
+                        </p>
+                    </div>
+                    <div>
+                        <img src="/static/visual/backend.png" alt="img" class="front-backend-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
 {% endblock %}

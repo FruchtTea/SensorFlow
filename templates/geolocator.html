@@ -5,8 +5,44 @@ Geolocator
 {% endblock %}
 
 {% block content %}
-<center>
-    <h1 class="header">Geolocator</h1>
-    <iframe src="render-geolocation-page" title="map" style="width: 100vh; height:50vh;"></iframe>
-</center>
+<main>
+    <div class="glass-container">
+        <div class="mainpage-wrapper">
+            <h1 class="header">Geolocator</h1>
+            <div class="main-bottom-container">
+                <p class="main-text-content">
+                    Du hast dich verloren und weißt nicht mehr wo du dich befindest? Dann ist heute dein Glückstag!
+                    Unser Geolocator hilft dir aus der Patsche<br>und gibt dir endlich deinen Orientierungssinn
+                    zurück!
+                    <br>
+                    <br>
+                </p>
+            </div>
+
+            <div class="main-bottom-container">
+                <div class="main-text-content">
+                    <div class="geolocator-glass-container">
+                        <h2><i class="fa-solid fa-map-location-dot"></i> Du befindest dich derzeit hier</h2>
+                        <br>
+                        <p>
+                            <i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                            Längengrad: <span style="color: #7fe5ff;">
+                                {{ show_latitude }}</span>
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-angles-right" style="margin-right: 5px; color: bisque;"></i>
+                            Breitengrad: <span style="color: #7fe5ff;">
+                                {{ show_longitude }}</span>
+                        </p>
+                        <img src="/static/visual/globe.png" alt="img" id="geolocator-image" draggable="false">
+                    </div>
+                </div>
+                <div>
+                    <iframe src="http://127.0.0.1:5000/render-geolocation-page" title="map"
+                        id="geolocator-map"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

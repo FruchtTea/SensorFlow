@@ -1,6 +1,11 @@
 from flask import Flask, render_template
 import paho.mqtt.client as mqtt
-import folium, time, threading, json
+import folium, time, threading
+
+temp = 0
+humid = 0
+lat = 0
+long = 0
 
 gruppenname = "sensorik"
 id = "IoTinformatikschulbuch"
@@ -28,22 +33,24 @@ def verarbeite_telemetry(client, nutzerdaten, nachricht):
 
     payload_message = payload.split("=")
 
-    # Dictionary für die möglichen MQTT Inputs
-    mapping = {
-        "lat": "Breitengrad",
-        "long": "Laegengrad",
-        "temp": "Temperatur",
-        "humid": "Luftfeuchtigkeit"
-}
+    # Aktualisiere die globalen Variablen
+    global lat, long, temp, humid
 
-    # Überprüfen, ob der Schlüssel in der Zuordnung vorhanden ist
-    if payload_message[0] in mapping:
-        key = mapping[payload_message[0]]
-        value = float(payload_message[1])
-        data = {key: value}
-        json_data = json.dumps(data)
-        with open("data.json", "w") as json_file:
-            json_file.write(json_data)
+    if payload_message[0] == "lat":
+        lat_value = float(payload_message[1])
+        lat = lat_value
+
+    if payload_message[0] == "long":
+        long_value = float(payload_message[1])
+        long = long_value
+
+    if payload_message[0] == "temp":
+        temp_value = float(payload_message[1])
+        temp = temp_value
+
+    if payload_message[0] == "humid":
+        humid_value = float(payload_message[1])
+        humid = humid_value
 
 
 app = Flask(__name__)
@@ -56,19 +63,18 @@ def render_main_page():
 
 @app.route("/geolocator")
 def render_geolocator_page():
-    return render_template("geolocator.html")
+
+    global lat
+    global long
+
+    return render_template("geolocator.html", show_latitude=lat, show_longitude=long)
 
 
 @app.route("/render-geolocation-page")
 def render_karte():
-    
-    # JSON-Datei öffnen und Daten laden
-    with open("data.json", "r") as json_file:
-        json_data = json.load(json_file)
 
-    # Den Wert aus der JSON-Datei auslesen
-    lat = json_data["Laengengrad"]
-    long = json_data["Breitengrad"]
+    global lat
+    global long
 
     map = folium.Map(
         location=[lat, long], 
@@ -88,13 +94,8 @@ def render_karte():
 @app.route("/raumklima")
 def render_klima_page():
 
-    # JSON-Datei öffnen und Daten laden
-    with open("data.json", "r") as json_file:
-        json_data = json.load(json_file)
-
-    # Den Wert aus der JSON-Datei auslesen
-    temp = json_data["Temperatur"]
-    humid = json_data["Luftfeuchtigkeit"]
+    global temp 
+    global humid
 
     return render_template("raumklima.html", show_temperature=temp, show_humidity=humid)
 
